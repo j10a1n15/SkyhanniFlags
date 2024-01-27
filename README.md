@@ -20,6 +20,15 @@ Then just reload your texture packs in game and you are good to go. (Note that t
 Also skyhanni might not have my pr yet that allows you to reload shaders, so you might need to restart for your change to work.
 
 
+## Script directives
+
+How to make your own flags:
+
+`#abcdef` adds a new color. `#RRGGBB` hex color code.
+
+`interpolation=<number>` sets the interpolation level. 0 is linear, everything else is exponential. use something like 10000 for flat bands, or 20 if you want somewhat nice looking results.
+
+`maxsaturation` maxes out the saturation of all colors automatically.
 
 
 
