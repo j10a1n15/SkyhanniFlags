@@ -1,0 +1,6 @@
+interpolation=20
+#5bcffa
+#f5abb9
+#ffffff
+#f5abb9
+#5bcffa

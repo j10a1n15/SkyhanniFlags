@@ -1,0 +1,5 @@
+interpolation=10000
+#002780
+#fcd20e
+#cf0821
+
