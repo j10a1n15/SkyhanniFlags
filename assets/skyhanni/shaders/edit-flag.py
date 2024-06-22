@@ -11,7 +11,7 @@ colors: typing.List[Color] = []
 max_saturation = False
 interpolation = 0
 
-shader_file = pathlib.Path(__file__).parent.resolve() / "chroma.fsh"
+shader_file = pathlib.Path(__file__).parent.resolve() / "textured_chroma.fsh"
 
 source_file = pathlib.Path(sys.argv[1]).read_text().splitlines() if len(sys.argv) > 1 else None
 source_file_idx = 0
