@@ -19,6 +19,7 @@ python assets/skyhanni/shaders/edit-flag.py germany.txt
 
 Then just reload your texture packs in game and you are good to go. (Note that this only works if you unpacked your texture pack, and you need to have python installed)
 
+
 ## Script directives
 
 How to make your own flags:
