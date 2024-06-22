@@ -13,7 +13,7 @@ Be proud of who you are!
 Simply install this texture pack and have skyhanni installed and your chroma will be replaced with our custom colors.
 
 By default this uses the bisexual flag, but you can change it by running the accompanying python script: 
-```python
+```
 python assets/skyhanni/shaders/edit-flag.py germany.txt
 ```
 
