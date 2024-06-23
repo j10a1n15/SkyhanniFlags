@@ -11,7 +11,8 @@ colors: typing.List[Color] = []
 max_saturation = False
 interpolation = 0
 
-shader_file = pathlib.Path(__file__).parent.resolve() / "textured_chroma.fsh"
+textured_shader_file = pathlib.Path(__file__).parent.resolve() / "textured_chroma.fsh"
+standard_shader_file = pathlib.Path(__file__).parent.resolve() / "standard_chroma.fsh"
 
 source_file = pathlib.Path(sys.argv[1]).read_text().splitlines() if len(sys.argv) > 1 else None
 source_file_idx = 0
@@ -56,30 +57,54 @@ for col in colors:
     saturations.append(s)
     brightnesses.append(v)
 
-text = shader_file.read_text()
+textured_text = textured_shader_file.read_text()
 
 
-newlines: typing.List[str] = []
+textured_newlines: typing.List[str] = []
 is_skipping_lines = False
-for line in text.splitlines():
+for line in textured_text.splitlines():
     if line == "// FLAG_BEGIN":
         is_skipping_lines = True
     elif line == "// FLAG_END":
-        newlines.append("#define HUE_INIT (" + ','.join(map(str, hues)) + ")")
-        newlines.append("#define SATURATION_INIT (" + ','.join(map(str, saturations)) + ")")
-        newlines.append("#define BRIGHTNESS_INIT (" + ','.join(map(str, brightnesses)) + ")")
-        newlines.append("#define FLAG_SIZE " + str(len(hues)))
-        newlines.append("#define MAX_SATURATION " + ("true" if max_saturation else "false"))
-        newlines.append("#define INTERPOLATION_LEVEL " + str(interpolation))
+        textured_newlines.append("#define HUE_INIT (" + ','.join(map(str, hues)) + ")")
+        textured_newlines.append("#define SATURATION_INIT (" + ','.join(map(str, saturations)) + ")")
+        textured_newlines.append("#define BRIGHTNESS_INIT (" + ','.join(map(str, brightnesses)) + ")")
+        textured_newlines.append("#define FLAG_SIZE " + str(len(hues)))
+        textured_newlines.append("#define MAX_SATURATION " + ("true" if max_saturation else "false"))
+        textured_newlines.append("#define INTERPOLATION_LEVEL " + str(interpolation))
         is_skipping_lines = False
     elif is_skipping_lines:
         continue
-    newlines.append(line)
+    textured_newlines.append(line)
+    
+print("Textured shader:")
+for line in textured_newlines:
+    print(line)
+    
+      
+textured_shader_file.write_text('\n'.join(textured_newlines))
 
 
-for line in newlines:
+standard_newlines: typing.List[str] = []
+is_skipping_lines = False
+standard_text = standard_shader_file.read_text()
+for line in standard_text.splitlines():
+    if line == "// FLAG_BEGIN":
+        is_skipping_lines = True
+    elif line == "// FLAG_END":
+        standard_newlines.append("#define HUE_INIT (" + ','.join(map(str, hues)) + ")")
+        standard_newlines.append("#define SATURATION_INIT (" + ','.join(map(str, saturations)) + ")")
+        standard_newlines.append("#define BRIGHTNESS_INIT (" + ','.join(map(str, brightnesses)) + ")")
+        standard_newlines.append("#define FLAG_SIZE " + str(len(hues)))
+        standard_newlines.append("#define MAX_SATURATION " + ("true" if max_saturation else "false"))
+        standard_newlines.append("#define INTERPOLATION_LEVEL " + str(interpolation))
+        is_skipping_lines = False
+    elif is_skipping_lines:
+        continue
+    standard_newlines.append(line)
+
+print("Standard shader:")
+for line in standard_newlines:
     print(line)
 
-shader_file.write_text('\n'.join(newlines))
-
-
+standard_shader_file.write_text('\n'.join(standard_newlines))
